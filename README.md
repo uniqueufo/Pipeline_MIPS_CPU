@@ -1,7 +1,7 @@
 ### <center> ------流水线多周期CPU设计
 ---------------------
 
-###**实现的指令**
+### **实现的指令**
 > (6条)算数运算指令：ADD ADDU SUB SUBU ADDI ADDIU
 (11条)逻辑运算指令：AND OR NOR XOR ANDI ORI XORI SLT SLTI SLTU SLTIU
 (5条)移位指令：SLL SLLV SRL SRLV SRA
@@ -13,7 +13,7 @@
 
 
 --------------------------------------------------------------
-###**流水线各级设计思想**
+### **流水线各级设计思想**
 
 
 >1) IF 级：取指令级。从 ROM 中读取指令，并在下一个时钟沿到来时把指令送
@@ -41,7 +41,7 @@
 
 
 ----------------------------------------
-###**流水线冒险的处理**
+### **流水线冒险的处理**
 
 
 > 1）**数据相关**
@@ -66,9 +66,9 @@
 >     我们将用于判断分支指令成立的 Zero 信号检测电路（Z test ）从 ALU 中独立出来，并将它从 EX 级提前至 ID 级。具体的设计将在 ID 级设计中介绍。在提前完成以上两个操作之外，我们还需丢弃 IF 级的指令。具体做法是：加入一个控制信号 IF_flush，做为 IF/ID 流水线寄存器的清零信号。当分支冒险成立，即 Z=1，则IF_flush=1，否则 IF_flush=0，故 IF_flush = Z。考虑到本系统还要实现的无条件跳转指令：J 和JR，在执行这两个指令时也必须要对 IF/ID 流水线寄存器进行清空，因此， IF_flush 的表达式应表示为：IF_flush = Z || J || JR。
 
 
-###**流水线MIPS CPU主要功能模块**
+### **流水线MIPS CPU主要功能模块**
 
-####<center>**IF段**
+#### <center>**IF段**
 ```verilog
 module IF(clk, reset, Z, J, JR,TRAP,PC_IFWrite, JumpAddr, JrAddr, BranchAddr, Instruction_if,
 		    PC,NextPC_if);
@@ -435,7 +435,7 @@ endcase
 end
 endmodule
 ```
-####<center>**Top模块**
+#### <center>**Top模块**
 ```verilog
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
@@ -572,7 +572,7 @@ module Top(clk,reset,Addr,SelectMode,JumpFlag,Instruction_if,ALUResult,PC,Stall,
 assign RegWriteData_wb=MemToReg_wb?MemDout_wb:ALUResult_wb;
 endmodule
 ```
-###仿真测试
+### 仿真测试
 **仿真器中的值**
 ![Alt text](https://github.com/uniqueufo/Pipeline_MIPS_CPU/blob/master/%E4%BB%BF%E7%9C%9F%E6%B3%A2%E5%BD%A2.PNG)
 
